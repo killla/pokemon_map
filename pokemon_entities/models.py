@@ -3,11 +3,9 @@ from django.db import models
 class Pokemon(models.Model):
     title = models.CharField(max_length=200, verbose_name='Имя на русском')
     title_en = models.CharField(max_length=200,
-                                null=True,
                                 blank=True,
                                 verbose_name='Имя на английском')
     title_jp = models.CharField(max_length=200,
-                                null=True,
                                 blank=True,
                                 verbose_name='Имя на японском')
     photo = models.ImageField(upload_to='pokemons',
@@ -15,7 +13,6 @@ class Pokemon(models.Model):
                               blank=True,
                               verbose_name='Фото')
     description = models.TextField(verbose_name='Описание',
-                                    null = True,
                                     blank = True,
                                    )
     previous_evolution = models.ForeignKey('self',
@@ -29,7 +26,7 @@ class Pokemon(models.Model):
         return '{}'.format(self.title)
 
 class PokemonEntity(models.Model):
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, verbose_name='Покемон')
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='entities', verbose_name='Покемон')
     lat = models.FloatField(verbose_name='Широта')
     lon = models.FloatField(verbose_name='Долгота')
 
