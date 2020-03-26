@@ -53,7 +53,6 @@ def show_pokemon(request, pokemon_id):
     except ObjectDoesNotExist:
         return HttpResponseNotFound('Покемон не существует')
 
-
     previous_pokemon = requested_pokemon.previous_evolution
     if previous_pokemon:
         previous_evolution = {
@@ -74,7 +73,6 @@ def show_pokemon(request, pokemon_id):
     else:
         next_evolution = None
 
-
     pokemon = {
         'pokemon_id' : requested_pokemon.id,
         'title_ru' : requested_pokemon.title,
@@ -87,7 +85,6 @@ def show_pokemon(request, pokemon_id):
     }
 
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
-    #for pokemon_entity in PokemonEntity.objects.filter(pokemon=requested_pokemon):
     for pokemon_entity in requested_pokemon.entities.all():
         add_pokemon(
             folium_map, pokemon_entity.lat, pokemon_entity.lon,
